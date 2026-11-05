@@ -1,0 +1,91 @@
+$d: clamp(10em, 50vw, 26em);
+$b: clamp(0.05em, 0.25vw, 0.125em);
+$p: clamp(0.65em, 3.4vw, 1.75em);
+$c: #2d60b4 #0026fe #5b1ca3;
+$img-size: clamp(4.5em, 23vw, 12em);
+
+.a3d {
+	position: relative;
+	transform-style: preserve-3d;
+	width: $d;
+	height: $d;
+	max-width: 100%;
+}
+
+/* Imaginea din centru */
+.center-image {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) translateZ(1px);
+	width: $img-size;
+	height: $img-size;
+	max-width: 75%;
+	max-height: 75%;
+	object-fit: cover;
+	border-radius: 50%;
+	outline: 2px solid rgb(0, 0, 0);
+}
+
+.ring {
+	box-sizing: border-box;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: calc($d / -2);
+	border: solid $b nth($c, 1);
+	padding: $p;
+	width: $d;
+	height: $d;
+	border-radius: 50%;
+
+	transform:
+		rotate(calc(var(--k) * 1turn))
+		translateY(calc(-2.2 * $p))
+		rotateY(-1deg)
+		rotate(0deg);
+
+	background:
+		radial-gradient(
+			nth($c, 3) calc(.5 * $d - $p),
+			rgba(nth($c, 3), 0) calc(.5 * $d - $p + $b)
+		),
+		conic-gradient(
+			nth($c, 1),
+			nth($c, 2),
+			nth($c, 2),
+			nth($c, 1) 25%,
+			mix(nth($c, 3), nth($c, 2)) 39%,
+			nth($c, 3),
+			mix(nth($c, 3), nth($c, 2)) 87%,
+			nth($c, 1)
+		);
+
+	--g: linear-gradient(red, red);
+	--m: var(--g) content-box, var(--g) border-box;
+
+	-webkit-mask: var(--m);
+	-webkit-mask-composite: xor;
+	mask: var(--m);
+	mask-composite: exclude;
+
+	animation: a 15s linear infinite;
+}
+
+@keyframes a {
+	0% {
+		transform:
+			rotate(calc(var(--k) * 1turn))
+			translateY(calc(-2.6 * $p))
+			rotateY(-1deg)
+			rotate(0deg);
+	}
+
+	100% {
+		transform:
+			rotate(calc((var(--k) + 1) * 1turn))
+			translateY(calc(-2.6 * $p))
+			rotateY(-1deg)
+			rotate(-2turn);
+	}
+}
