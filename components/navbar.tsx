@@ -4,6 +4,8 @@
 import { useEffect, useState } from "react";
 import { slide as Menu } from "react-burger-menu";
 
+
+
 const sections = [
   { name: "Home", id: "home" },
   { name: "Projects", id: "projects" },
@@ -106,28 +108,30 @@ export default function Navbar({
       background: "#ffffff",
     },
 
-    bmMenuWrap: {
-      position: "fixed",
-      height: "190px",
-      width: "100%",
-      top: "0px",
-      right: "0px",
-      transition: "height 0.3s ease",
-    },
+   bmMenuWrap: {
+  position: "fixed",
+  height: "190px",
+  width: "100%",
+  top: "0px",
+  right: "0px",
+  transition: "transform 0.4s ease-in-out",
+},
 
-    bmMenu: {
-      background: "rgba(0, 0, 0, 0.95)",
-      backdropFilter: "blur(12px)",
-      padding: "2em 1.2em 0",
-      fontSize: "0.9em",
-    },
+bmMenu: {
+  background: "rgba(0, 0, 0, 0.95)",
+  backdropFilter: "blur(12px)",
+  padding: "4em 1.2em 1.5em",
+  fontSize: "0.9em",
+},
 
     bmItemList: {
-      display: "flex",
-      flexDirection: "column",
-      gap: "11px",
-      padding: "0.3em",
-    },
+  display: "grid",
+  gridTemplateColumns: "repeat(2, 1fr)",
+  gridTemplateRows: "repeat(2, auto)",
+  gap: "20px 30px",
+  padding: "0.5em",
+  alignItems: "center",
+},
 
     bmItem: {
       display: "inline-block",
@@ -141,7 +145,7 @@ export default function Navbar({
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full px-3 sm:px-5 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
+    <nav className="fixed top-0 left-0 w-full px-3 sm:px-5 z-50 bg-grey-600 backdrop-blur-md border-b border-white/10">
 
       <div className="max-w-7xl mx-auto px-3 sm:px-6 py-3 md:py-4 flex items-center justify-between">
 
@@ -177,27 +181,35 @@ export default function Navbar({
 
         {/* MOBILE MENU */}
 
-        <div className="md:hidden flex items-center">
-          <Menu
-            right
-            isOpen={menuOpen}
-            onStateChange={handleStateChange}
-            styles={burgerStyles}
-          >
-            {sections.map((link) => (
-              <a
-                key={link.id}
-                href={`#${link.id}`}
-                onClick={closeMenu}
-                className={`text-white text-sm font-medium transition ${
-                  active === link.id ? activeStyle : inactiveStyle
-                }`}
-              >
-                {link.name}
-              </a>
-            ))}
-          </Menu>
-        </div>
+       {/* MOBILE MENU */}
+<div className="md:hidden flex items-center">
+  <Menu
+    right
+    isOpen={menuOpen}
+    onStateChange={handleStateChange}
+    styles={burgerStyles}
+  >
+    {sections.map((link) => (
+      <a
+        key={link.id}
+        href={`#${link.id}`}
+        onClick={closeMenu}
+        className={`
+          relative inline-block w-fit
+          text-white text-sm font-medium
+          transition-colors duration-300
+          ${
+            active === link.id
+              ? "after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-gradient-to-r after:from-pink-400 after:via-purple-400 after:to-blue-400"
+              : "after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-gradient-to-r after:from-pink-400 after:via-purple-400 after:to-blue-400 after:transition-all after:duration-300 hover:after:w-full"
+          }
+        `}
+      >
+        {link.name}
+      </a>
+    ))}
+  </Menu>
+</div>
 
       </div>
     </nav>

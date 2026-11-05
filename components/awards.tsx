@@ -8,7 +8,7 @@ import Projects from "./projects";
 /* ---------------------------------------------------------- */
 
 const container =
-  "min-h-screen w-full px-4 sm:px-6 md:px-16 lg:px-24 py-6 md:py-12 flex flex-col gap-4 md:gap-8";
+  " w-full px-4 sm:px-6 md:px-8 lg:px-16 py-4 md:py-10 flex flex-col gap-4 md:gap-8";
 
 const title =
   "text-base sm:text-lg md:text-2xl font-bold leading-tight text-white";

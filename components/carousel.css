@@ -1,0 +1,186 @@
+* {
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* Putting the whole thing in a container with overflow: hidden prevents Google Chrome from showing vertical scrollbar on the page */
+#container {
+    display: block;
+    width: 602px;
+    height: 422px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.cssslideshow {
+    display: block;
+    width: 602px;
+    height: 402px;
+    white-space: nowrap;
+    position: relative;
+    /* Styling */
+    border: 1px solid black;
+    text-align: center; /* Position of navigation dots at the bottom */
+}
+    .cssslideshow label {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        transition: left ease-in-out 0.3s /* animation speed */, clip ease-in-out 0.3s /* animation speed */;
+    }
+    .cssslideshow label img {
+        width: 100%;
+        height: 100%;
+    }
+    /* All elements are waiting on the left side of the container and are clipped so they don't stick out of the container... */
+    .cssslideshow label {
+        left: -100%;
+        clip: rect(0, 640px, 400px, 600px);
+    }
+    /* Except all the ones after checked radio button, those are waiting on the right... */
+    .cssslideshow input:checked ~ label {
+        left: 100%;
+        clip: rect(0, 0, 400px, -40px);
+    }
+    /* Except the one immediately after checked radio button, that is in the container */
+    .cssslideshow input:checked + label {
+        left: 0;
+        clip: rect(0, 600px, 400px, 0);
+    }
+    /* Puts our indicator dots at the bottom */
+    .cssslideshow input {
+        position: relative;
+        top: calc(100% + 5px);
+    }
+    /* Now for the arrows... Sweet Lord. */
+    .cssslideshow label:before,
+    .cssslideshow label:after {
+        display: block;
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        top: calc((100% - 40px) / 2);
+        transition: right ease-in-out 0.3s /* animation speed */, left ease-in-out 0.3s /* animation speed */;
+        /* Styling */
+        background: rgb(255, 165, 0);
+        font-size: 34px;
+        font-family: Consolas;
+        font-weight: 800;
+        line-height: 37px;
+        color: white;
+        z-index: 1;
+    }
+    .cssslideshow label:hover:before,
+    .cssslideshow label:hover:after {
+        /* Styling */
+        background: rgb(255, 195, 30);
+    }
+    .cssslideshow label:before {
+        content: '>';
+    }
+    .cssslideshow label:after {
+        content: '<';
+    }
+    /* Slides on the left */
+    .cssslideshow label:before {
+        right: -100%;
+        cursor: default;
+    }
+    .cssslideshow label:after {
+        left: 100%;
+        opacity: 1;
+        cursor: pointer;
+        cursor: hand;
+        transition: left ease-in-out 0.3s /* animation speed */;
+    }
+    /* Slides on the right */
+    .cssslideshow input:checked ~ label:before {
+        right: 100%;
+        opacity: 1;
+        cursor: pointer;
+        cursor: hand;
+        transition: right ease-in-out 0.3s /* animation speed */;
+    }
+    .cssslideshow input:checked ~ label:after {
+        left: -100%;
+        cursor: default;
+        transition: opacity 0s ease-in-out 0s;
+    }
+    /* Active slide */
+    .cssslideshow input:checked + label:before {
+        right: 0;
+        opacity: 0;
+        cursor: default;
+        transition: opacity 0s ease-in-out 0s;
+    }
+    .cssslideshow input:checked + label:after {
+        left: 0;
+        opacity: 0;
+        cursor: default;
+    }
+    /* Move the "proper" buttons to the front */
+    .cssslideshow input + label:after {
+        z-index: 3;
+    }
+    .cssslideshow input:checked ~ label:after {
+        z-index: 1;
+    }
+    .cssslideshow input:checked + label + input + label:before {
+        z-index: 3;
+    }
+    /* Now, since "back" button for the first slide and "next" button for the last slide are unused, we're going to recycle them to make "wrap" buttons */
+    .cssslideshow label:first-of-type:before,
+    .cssslideshow label:last-of-type:after {
+        z-index: 2 !important; /* This has to be under prev/next buttons (currently on level 3), but still close to the top */
+        opacity: 1 !important;
+        cursor: pointer !important;
+        cursor: hand !important;
+        /* Styling */
+        letter-spacing: -7px;
+        text-align: left;
+        padding-left: 5px;
+        width: 35px;
+    }
+    /* Last-to-first wrap button */
+    .cssslideshow input:not(:checked) + label:first-of-type {
+        clip: rect(0, 1280px, 400px, 600px); /* This is to widen the clip area to fit the "wrap" button where we want it to be */
+    }
+    .cssslideshow label:first-of-type:before {
+        content: '>>';
+        right: 0 !important;
+        transition: right ease-in-out 0.3s !important;
+    }
+    .cssslideshow input:not(:checked) + label:first-of-type:before {
+        right: -100% !important; /* If the first slide is not active, it's on the left from the container, so we have to move the button 100% right */
+    }
+    /* First-to-last wrap button */
+    .cssslideshow input:not(:checked) + label:last-of-type {
+        clip: rect(0px, 0px, 400px, -640px) !important; /* This is to widen the clip area to fit the "wrap" button where we want it to be */
+    }
+    .cssslideshow label:last-of-type:after {
+        content: '<<';
+        left: 0 !important;
+        transition: left ease-in-out 0.3s !important;
+    }
+    .cssslideshow input:not(:checked) + label:last-of-type:after {
+        left: -100% !important; /* If the last slide is not active, it's on the right from the container, so we have to move the button 100% left */
+    }
+
+
+/* Non-CSS slideshow CSS */
+
+
+.info {
+    border: 1px solid rgba(255, 0, 0, 0.8);
+    background: rgba(255, 0, 0, 0.1);
+    padding: 10px;
+    margin-bottom: 2em;
+}
+
+.info strong {
+    font-weight: 600;
+}

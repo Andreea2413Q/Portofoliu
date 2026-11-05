@@ -1,6 +1,9 @@
 import BackgroundGrid from "@/app/background_grid";
 import type {Metadata} from 'next';
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
 
+const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata:Metadata = {
   title:'CV',
@@ -12,7 +15,7 @@ export default function RootLayout(
   })
   {
     return (
-      <html lang="en">
+      <html lang="en" className={cn("font-sans", inter.variable)}>
         <body className="bg-black text-white">
   <BackgroundGrid />
 

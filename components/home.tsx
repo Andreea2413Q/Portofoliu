@@ -73,7 +73,7 @@ export default function Home({ menuOpen }: HomeProps) {
         {/* DESCRIERE */}
 
         <p className={descriptionStyle}>
-          "Cunoașterea înseamnă putere"
+          Tehnnologia mereu avansează !
         </p>
 
         <p className="text-cyan-400 text-sm sm:text-base md:text-lg">
